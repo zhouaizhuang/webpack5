@@ -3,6 +3,10 @@ import imgSrc from "./assets/ylyn_addr_writeoff_light.png"
 import abc from "./assets/abc.jpg"
 import rightSvg from "./assets/right.svg"
 import exampleText from "./assets/example.txt"
+import "./style.css"
+import "./style.less"
+import "./style.scss"
+
 helloworld()
 const img = document.createElement('img')
 img.src = imgSrc
@@ -13,7 +17,8 @@ img2.src = rightSvg
 document.body.appendChild(img2)
 
 const block = document.createElement('div')
-block.textContent = exampleText
+block.textContent = '12312123123123lkjalsdj alsdj aj敖德萨所大所大多撒 '
+block.classList.add('block-bg')
 document.body.appendChild(block)
 
 const img3 = document.createElement('img')
