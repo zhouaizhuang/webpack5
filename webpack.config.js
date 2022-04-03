@@ -3,6 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 // const commonCssLoader = [MiniCssExtractPlugin.loader,'css-loader',{loader: 'postcss-loader',options: {ident: 'postcss',plugins:()=>[require('postcss-preset-env')]}}]
+const toml = require('toml')
+const yaml = require('yaml')
+const json5 = require('json5')
 module.exports = {
   mode:'development', // 打包环境
   // mode:'production', // 打包环境
@@ -50,7 +53,28 @@ module.exports = {
           // { test: /\.(ttf|eot|svg|woff|woff2)$/, loader: 'url-loader', options: {name:'[hash:10].[ext]', outputPath: 'meadias'} },
           { test: /\.txt$/, type: 'asset/source'},
           { test: /\.(csv|tsv)$/, use: 'csv-loader'},
-
+          { test: /\.xml$/, use: 'xml-loader'},
+          {
+            test: /\.toml$/,
+            type:'json',
+            parser:{
+              parse: toml.parse
+            }
+          },
+          {
+            test: /\.yaml$/,
+            type:'json',
+            parser:{
+              parse: yaml.parse
+            }
+          },
+          {
+            test: /\.json5$/,
+            type:'json',
+            parser:{
+              parse: json5.parse
+            }
+          },
         ],
       },
       {
