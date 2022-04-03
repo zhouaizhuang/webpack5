@@ -5,7 +5,8 @@ module.exports = {
   output: {
     filename: 'bundle.js', // 打包后的文件名
     path: path.resolve(__dirname, './dist'), // 指定输出目录的根目录
-    clean: true // 每次打包先清除dist内文件
+    clean: true, // 每次打包先清除dist内文件
+    assetModuleFilename: 'images/[contenthash][ext]', // 图片资源的处理，命名
   },
   plugins: [
     new HtmlWebpackPlugin({ // 这个插件可以生成html文件，相关配置文档https://github.com/jantimon/html-webpack-plugin#configuration
@@ -19,4 +20,11 @@ module.exports = {
   },
   devtool: 'inline-source-map', // 开始source-map之后。代码出现错误，浏览器能精准定位到那个文件多少行。否则的话。默认指向的是打包后的文件中位置
   mode:'development', // 打包环境
+  module: {
+    rules: [
+      { test: /\.(jpg|png|gif|bmp|jpeg)$/, type: 'asset/resource', generator: { filename:'images/[contenthash][ext]'}}, // 这个配置比上面的assetModuleFilename优先级高
+      { test: /\.svg$/, type: 'asset/inline'},
+      { test: /\.txt$/, type: 'asset/source'}
+    ]
+  }
 }
