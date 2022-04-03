@@ -4,3 +4,11 @@ div{
 .block-bg{
   background-image:url(./assets/right.svg) !important;
 }
+@font-face{
+  font-family: 'iconfont';
+  src: url(./assets/quartzRegular.ttf) format('truetype');
+}
+.icon{
+  font-family: 'iconfont';
+  font-size: 30px;
+}

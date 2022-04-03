@@ -19,6 +19,7 @@ document.body.appendChild(img2)
 const block = document.createElement('div')
 block.textContent = '12312123123123lkjalsdj alsdj aj敖德萨所大所大多撒 '
 block.classList.add('block-bg')
+block.classList.add('icon')
 document.body.appendChild(block)
 
 const img3 = document.createElement('img')
