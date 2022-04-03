@@ -22,9 +22,18 @@ module.exports = {
   mode:'development', // 打包环境
   module: {
     rules: [
-      { test: /\.(jpg|png|gif|bmp|jpeg)$/, type: 'asset/resource', generator: { filename:'images/[contenthash][ext]'}}, // 这个配置比上面的assetModuleFilename优先级高
-      { test: /\.svg$/, type: 'asset/inline'},
-      { test: /\.txt$/, type: 'asset/source'}
+      {
+        test:/\.(jpg|png|gif|bmp|jpeg)$/,
+        loader: 'url-loader',
+        options: {
+          limit: 8 * 1024, // 图片小于8KB， 则转换为base64处理，以减轻服务器压力
+          esModule: false, // 关闭es6原本的模块化，使用commonjs解析，否则会出现[Object Module]
+          name: '[hash:10].[ext]',
+          outputPath: 'images' //最终放在imgs目录下
+        }
+      },
+      { test: /\.(ttf|eot|svg|woff|woff2)$/, loader: 'url-loader', options: {name:'[hash:10].[ext]', outputPath: 'meadias'} },
+      { test: /\.txt$/, type: 'asset/source'},
     ]
   }
 }
