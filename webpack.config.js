@@ -11,7 +11,7 @@ module.exports = {
     filename: 'bundle.js', // 打包后的文件名
     path: path.resolve(__dirname, './dist'), // 指定输出目录的根目录
     clean: true, // 每次打包先清除dist内文件
-    assetModuleFilename: 'images/[contenthash][ext]', // 图片资源的处理，命名
+    assetModuleFilename: 'media/[contenthash][ext]', // 图片字体资源的处理，命名
   },
   plugins: [
     new HtmlWebpackPlugin({ // 这个插件可以生成html文件，相关配置文档https://github.com/jantimon/html-webpack-plugin#configuration
@@ -41,7 +41,7 @@ module.exports = {
               limit: 8 * 1024, // 图片小于8KB， 则转换为base64处理，以减轻服务器压力
               esModule: false, // 关闭es6原本的模块化，使用commonjs解析，否则会出现[Object Module]
               name: '[hash:10].[ext]',
-              outputPath: 'imgs' //最终放在imgs目录下
+              outputPath: 'images' //最终放在images目录下
             }
           },
           { test: /\.html$/, loader: 'html-loader' },// 处理html文件的img
@@ -49,6 +49,8 @@ module.exports = {
           { test: /\.(ttf|eot|woff|woff2)$/, type: 'asset/resource' },
           // { test: /\.(ttf|eot|svg|woff|woff2)$/, loader: 'url-loader', options: {name:'[hash:10].[ext]', outputPath: 'meadias'} },
           { test: /\.txt$/, type: 'asset/source'},
+          { test: /\.(csv|tsv)$/, use: 'csv-loader'},
+
         ],
       },
       {
