@@ -56,7 +56,8 @@ module.exports = {
   devServer: {
     host: 'localhost',
     port: '3000',
-    open: true
+    open: true,
+    hot: true
   },
   mode: 'development',
   devtool: 'cheap-module-source-map'
