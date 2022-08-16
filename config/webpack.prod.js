@@ -1,6 +1,7 @@
 const path = require('path')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -12,9 +13,9 @@ module.exports = {
   module: {
     rules: [
       { test: /\.vue$/, use: 'vue-loader' },
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      { test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
-      { test: /\.s[ac]ss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
+      { test: /\.css$/, use: [MiniCssExtractPlugin.loader, 'css-loader'] },
+      { test: /\.less$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'] },
+      { test: /\.s[ac]ss$/, use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'] },
       {
         test: /\.(png|jpe?g|gif|webp|svg)$/,
         type: 'asset',
@@ -52,6 +53,9 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../public/index.html')
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'static/css/main.css'
     })
   ],
   mode: 'production'
