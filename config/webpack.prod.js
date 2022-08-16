@@ -55,7 +55,7 @@ module.exports = {
           },
           {
             test: /\.m?js$/,
-            exclude: /(node_modules|bower_components)/,
+            exclude: '/node_modules/',
             use: {
               loader: 'babel-loader',
               options: {
@@ -69,7 +69,8 @@ module.exports = {
   },
   plugins: [
     new ESLintPlugin({
-      context: path.resolve(__dirname, '../src')
+      context: path.resolve(__dirname, '../src'),
+      exclude: '/node_modules/'
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../public/index.html')
