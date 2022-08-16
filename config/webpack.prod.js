@@ -2,7 +2,23 @@ const path = require('path')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+// 封装css Loader获取函数
+function getStyleLoader(pre) {
+  return [
+    MiniCssExtractPlugin.loader,
+    'css-loader',
+    {
+      loader: 'postcss-loader',
+      options: {
+        postcssOptions: {
+          plugins: ['postcss-preset-env']
+        }
+      }
+    },
+    pre
+  ].filter(Boolean)
+}
 module.exports = {
   entry: './src/main.js',
   output: {
@@ -13,53 +29,9 @@ module.exports = {
   module: {
     rules: [
       { test: /\.vue$/, use: 'vue-loader' },
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: ['postcss-preset-env']
-              }
-            }
-          }
-        ]
-      },
-      {
-        test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: ['postcss-preset-env']
-              }
-            }
-          },
-          'less-loader'
-        ]
-      },
-      {
-        test: /\.s[ac]ss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: ['postcss-preset-env']
-              }
-            }
-          },
-          'sass-loader'
-        ]
-      },
+      { test: /\.css$/, use: getStyleLoader() },
+      { test: /\.less$/, use: getStyleLoader('less-loader') },
+      { test: /\.s[ac]ss$/, use: getStyleLoader('sass-loader') },
       {
         test: /\.(png|jpe?g|gif|webp|svg)$/,
         type: 'asset',
@@ -100,7 +72,8 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'static/css/main.css'
-    })
+    }),
+    new CssMinimizerPlugin()
   ],
   mode: 'production'
 }
