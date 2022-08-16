@@ -1,12 +1,12 @@
 const path = require('path')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: 'static/js/main.js',
-    clean: true
+    path: undefined,
+    filename: 'static/js/main.js'
   },
   module: {
     rules: [
@@ -37,18 +37,26 @@ module.exports = {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader'
-          // options: {
-          //   presets: ['@babel/preset-env'],
-          // }
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
         }
       }
     ]
   },
   plugins: [
     new ESLintPlugin({
-      context: path.resolve(__dirname, 'src')
+      context: path.resolve(__dirname, '../src')
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../public/index.html')
     })
   ],
+  devServer: {
+    host: 'localhost',
+    port: '3000',
+    open: true
+  },
   mode: 'development'
 }
