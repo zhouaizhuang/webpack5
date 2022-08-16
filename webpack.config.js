@@ -1,4 +1,5 @@
 const path = require('path')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -45,6 +46,9 @@ module.exports = {
     ]
   },
   plugins: [
+    new ESLintPlugin({
+      context: path.resolve(__dirname, "src")
+    })
   ],
   mode: 'development'
 }
