@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'static/js/main.js',
-    clean: true,
+    clean: true
   },
   module: {
     rules: [
@@ -16,38 +16,38 @@ module.exports = {
       { test: /\.s[ac]ss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
       {
         test: /\.(png|jpe?g|gif|webp|svg)$/,
-        type: "asset",
+        type: 'asset',
         parser: {
           dataUrlCondition: {
             maxSize: 10 * 1024
           }
         },
         generator: {
-          filename: "static/images/[hash:10][ext][query]",
+          filename: 'static/images/[hash:10][ext][query]'
         }
       },
       {
         test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
-        type: "asset/resource",
+        type: 'asset/resource',
         generator: {
-          filename: "static/media/[hash:10][ext][query]",
+          filename: 'static/media/[hash:10][ext][query]'
         }
       },
       {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-          }
+          loader: 'babel-loader'
+          // options: {
+          //   presets: ['@babel/preset-env'],
+          // }
         }
-      },
+      }
     ]
   },
   plugins: [
     new ESLintPlugin({
-      context: path.resolve(__dirname, "src")
+      context: path.resolve(__dirname, 'src')
     })
   ],
   mode: 'development'
