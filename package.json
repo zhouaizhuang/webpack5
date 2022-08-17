@@ -19,6 +19,7 @@
     "url": "https://github.com/zhouaizhuang/webpack5/issues"
   },
   "homepage": "https://github.com/zhouaizhuang/webpack5#readme",
+  "sideEffects": ["*.css", "*.less", "*.scss"],
   "devDependencies": {
     "@babel/core": "^7.18.10",
     "@babel/preset-env": "^7.18.10",
