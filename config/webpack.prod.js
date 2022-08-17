@@ -108,7 +108,11 @@ module.exports = {
       new TerserWebpackPlugin({
         parallel: threads, // 开启多进程和设置进程数量
       })
-    ]
+    ],
+    // 代码分割操作
+    splitChunks: {
+      chunks: "all",
+    }
   },
   mode: 'production',
   devtool: 'source-map'
