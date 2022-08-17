@@ -72,6 +72,7 @@ module.exports = {
                   presets: ['@babel/preset-env'],
                   cacheDirectory: true, // 开启babel缓存
                   cacheCompression: false, // 关闭缓存文件压缩
+                  plugins: ['@babel/plugin-transform-runtime'], // 减小代码体积
                 }
               }
             ]
