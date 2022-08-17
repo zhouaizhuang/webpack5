@@ -8,7 +8,9 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: undefined,
-    filename: 'static/js/main.js'
+    filename: 'static/js/main.js',
+    chunkFilename: 'static/js/[name].chunk.js',
+    assetModuleFilename: "static/media/[hash:10][ext][query]", // 图片字体等通过type:asset处理
   },
   module: {
     rules: [
@@ -26,16 +28,16 @@ module.exports = {
                 maxSize: 10 * 1024
               }
             },
-            generator: {
-              filename: 'static/images/[hash:10][ext][query]'
-            }
+            // generator: {
+            //   filename: 'static/images/[hash:10][ext][query]'
+            // }
           },
           {
             test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
             type: 'asset/resource',
-            generator: {
-              filename: 'static/media/[hash:10][ext][query]'
-            }
+            // generator: {
+            //   filename: 'static/media/[hash:10][ext][query]'
+            // }
           },
           {
             test: /\.m?js$/,

@@ -26,8 +26,9 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'static/js/main.js',
-    chunkFilename: 'static/js/[name].js',
+    filename: 'static/js/[name].js',
+    chunkFilename: 'static/js/[name].chunk.js',
+    assetModuleFilename: "static/media/[hash:10][ext][query]", // 图片字体等通过type:asset处理
     clean: true
   },
   module: {
@@ -46,16 +47,16 @@ module.exports = {
                 maxSize: 10 * 1024
               }
             },
-            generator: {
-              filename: 'static/images/[hash:10][ext][query]'
-            }
+            // generator: {
+            //   filename: 'static/images/[hash:10][ext][query]'
+            // }
           },
           {
             test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
             type: 'asset/resource',
-            generator: {
-              filename: 'static/media/[hash:10][ext][query]'
-            }
+            // generator: {
+            //   filename: 'static/media/[hash:10][ext][query]'
+            // }
           },
           {
             test: /\.m?js$/,
@@ -94,7 +95,8 @@ module.exports = {
       template: path.resolve(__dirname, '../public/index.html')
     }),
     new MiniCssExtractPlugin({
-      filename: 'static/css/main.css'
+      filename: 'static/css/[name].css',
+      chunkFilename: 'static/css/[name].chunk.css'
     }),
     // new CssMinimizerPlugin(),
     // new TerserWebpackPlugin({
