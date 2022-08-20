@@ -2,6 +2,7 @@ const path = require('path')
 const os = require('os')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const threads = os.cpus.length
 
 module.exports = {
@@ -16,7 +17,6 @@ module.exports = {
     rules: [
       {
         oneOf: [
-          { test: /\.vue$/, use: 'vue-loader' },
           { test: /\.css$/, use: ['style-loader', 'css-loader'] },
           { test: /\.less$/, use: ['style-loader', 'css-loader', 'less-loader'] },
           { test: /\.s[ac]ss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
@@ -28,21 +28,14 @@ module.exports = {
                 maxSize: 10 * 1024
               }
             },
-            // generator: {
-            //   filename: 'static/images/[hash:10][ext][query]'
-            // }
           },
           {
             test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
             type: 'asset/resource',
-            // generator: {
-            //   filename: 'static/media/[hash:10][ext][query]'
-            // }
           },
           {
-            test: /\.m?js$/,
-            exclude: '/node_modules/',
-            // include: path.resolve(__dirname, '../src'),
+            test: /\.jsx?$/,
+            include: path.resolve(__dirname, '../src'),
             use: [
               {
                 loader: 'thread-loader',
@@ -55,7 +48,7 @@ module.exports = {
                 options: {
                   presets:[
                     [
-                      '@babel/preset-env',
+                      'react-app',
                       {
                         useBuiltIns: 'usage',
                         corejs: '3',
@@ -64,7 +57,7 @@ module.exports = {
                   ],
                   cacheDirectory: true, // 开启babel缓存
                   cacheCompression: false, // 关闭缓存文件压缩
-                  plugins: ['@babel/plugin-transform-runtime'], // 减小代码体积
+                  plugins: ["react-refresh/babel",'@babel/plugin-transform-runtime'], // 减小代码体积
                 }
               }
             ]
@@ -83,13 +76,18 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../public/index.html')
-    })
+    }),
+    new ReactRefreshWebpackPlugin ()
   ],
+  resolve:{
+    extensions: [".jsx", '.js', '.json'],
+  },
   devServer: {
     host: 'localhost',
     port: '3000',
     open: true,
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
   mode: 'development',
   devtool: 'cheap-module-source-map'
