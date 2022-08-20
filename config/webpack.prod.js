@@ -26,8 +26,8 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'static/js/[name].js',
-    chunkFilename: 'static/js/[name].chunk.js',
+    filename: 'static/js/[name].[hash:10].js',
+    chunkFilename: 'static/js/[name].[hash:10].chunk.js',
     assetModuleFilename: "static/media/[hash:10][ext][query]", // 图片字体等通过type:asset处理
     clean: true
   },
@@ -71,7 +71,15 @@ module.exports = {
               {
                 loader: 'babel-loader',
                 options: {
-                  presets: ['@babel/preset-env'],
+                  presets:[
+                    [
+                      '@babel/preset-env',
+                      {
+                        useBuiltIns: 'usage',
+                        corejs: '3',
+                      }
+                    ]
+                  ],
                   cacheDirectory: true, // 开启babel缓存
                   cacheCompression: false, // 关闭缓存文件压缩
                   plugins: ['@babel/plugin-transform-runtime'], // 减小代码体积
@@ -95,8 +103,8 @@ module.exports = {
       template: path.resolve(__dirname, '../public/index.html')
     }),
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name].css',
-      chunkFilename: 'static/css/[name].chunk.css'
+      filename: 'static/css/[name].[hash:10].css',
+      chunkFilename: 'static/css/[name].[hash:10].chunk.css'
     }),
     // new CssMinimizerPlugin(),
     // new TerserWebpackPlugin({

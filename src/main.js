@@ -1,3 +1,4 @@
+import 'core-js'
 import { sum } from './js/count.js'
 import './css/index.css'
 import './css/index.scss'
