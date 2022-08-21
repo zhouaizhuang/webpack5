@@ -26,16 +26,15 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'static/js/[name].[hash:10].js',
-    chunkFilename: 'static/js/[name].[hash:10].chunk.js',
-    assetModuleFilename: "static/media/[hash:10][ext][query]", // 图片字体等通过type:asset处理
+    filename: 'static/js/[name].[contenthash:10].js',
+    chunkFilename: 'static/js/[name].[contenthash:10].chunk.js',
+    assetModuleFilename: "static/media/[contenthash:10][ext][query]", // 图片字体等通过type:asset处理
     clean: true
   },
   module: {
     rules: [
       {
         oneOf: [
-          { test: /\.vue$/, use: 'vue-loader' },
           { test: /\.css$/, use: getStyleLoader() },
           { test: /\.less$/, use: getStyleLoader('less-loader') },
           { test: /\.s[ac]ss$/, use: getStyleLoader('sass-loader') },
@@ -47,20 +46,14 @@ module.exports = {
                 maxSize: 10 * 1024
               }
             },
-            // generator: {
-            //   filename: 'static/images/[hash:10][ext][query]'
-            // }
           },
           {
             test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
             type: 'asset/resource',
-            // generator: {
-            //   filename: 'static/media/[hash:10][ext][query]'
-            // }
           },
           {
-            test: /\.m?js$/,
-            exclude: '/node_modules/',
+            test: /\.jsx?$/,
+            include: path.resolve(__dirname, '../src'),
             use: [
               {
                 loader: 'thread-loader',
@@ -73,7 +66,7 @@ module.exports = {
                 options: {
                   presets:[
                     [
-                      '@babel/preset-env',
+                      'react-app',
                       {
                         useBuiltIns: 'usage',
                         corejs: '3',
@@ -82,7 +75,7 @@ module.exports = {
                   ],
                   cacheDirectory: true, // 开启babel缓存
                   cacheCompression: false, // 关闭缓存文件压缩
-                  plugins: ['@babel/plugin-transform-runtime'], // 减小代码体积
+                  plugins: ["react-refresh/babel",'@babel/plugin-transform-runtime'], // 减小代码体积
                 }
               }
             ]
@@ -103,13 +96,9 @@ module.exports = {
       template: path.resolve(__dirname, '../public/index.html')
     }),
     new MiniCssExtractPlugin({
-      filename: 'static/css/[name].[hash:10].css',
-      chunkFilename: 'static/css/[name].[hash:10].chunk.css'
+      filename: 'static/css/[name].[contenthash:10].css',
+      chunkFilename: 'static/css/[name].[contenthash:10].chunk.css'
     }),
-    // new CssMinimizerPlugin(),
-    // new TerserWebpackPlugin({
-    //   parallel: threads, // 开启多进程和设置进程数量
-    // })
   ],
   optimization: {
     minimizer: [
@@ -124,6 +113,9 @@ module.exports = {
     splitChunks: {
       chunks: "all",
     }
+  },
+  resolve:{
+    extensions: [".jsx", '.js', '.json'],
   },
   mode: 'production',
   devtool: 'source-map'

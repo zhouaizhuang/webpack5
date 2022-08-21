@@ -9,9 +9,9 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: undefined,
-    filename: 'static/js/[name].[hash:10].js',
-    chunkFilename: 'static/js/[name].[hash:10].chunk.js',
-    assetModuleFilename: "static/media/[hash:10][ext][query]", // 图片字体等通过type:asset处理
+    filename: 'static/js/[name].[contenthash:10].js',
+    chunkFilename: 'static/js/[name].[contenthash:10].chunk.js',
+    assetModuleFilename: "static/media/[contenthash:10][ext][query]", // 图片字体等通过type:asset处理
   },
   module: {
     rules: [
